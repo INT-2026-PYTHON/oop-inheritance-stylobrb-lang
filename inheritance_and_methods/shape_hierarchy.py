@@ -112,3 +112,83 @@ Explanation:
 =================================================
 
 """
+# Parent Class 
+class Shape(object):
+
+    def __init__(self, name):
+        self.name = name
+
+    def area(self):
+        raise NotImplementedError("area() must be implemented by child class")
+
+    def perimeter(self):
+        raise NotImplementedError("perimeter() must be implemented by child class")
+
+    def describe(self):
+        print(f"{self.name}: area={self.area()}, perimeter={self.perimeter()}")
+
+
+# Child Class: Circle 
+class Circle(Shape):
+
+    def __init__(self, radius):
+        Shape.__init__(self, "Circle")
+        self.radius = radius
+
+    def area(self):
+        return 3.14159 * self.radius * self.radius
+
+    def perimeter(self):
+        return 2 * 3.14159 * self.radius
+
+
+# Child Class: Rectangle
+class Rectangle(Shape):
+
+    def __init__(self, length, width):
+        Shape.__init__(self, "Rectangle")
+        self.length = length
+        self.width  = width
+
+    def area(self):
+        return self.length * self.width
+
+    def perimeter(self):
+        return 2 * (self.length + self.width)
+
+
+#  Child Class: Triangle 
+class Triangle(Shape):
+
+    def __init__(self, a, b, c):
+        Shape.__init__(self, "Triangle")
+        self.a = a
+        self.b = b
+        self.c = c
+
+    def perimeter(self):
+        return self.a + self.b + self.c
+
+    def area(self):
+        s = self.perimeter() / 2
+        return (s * (s - self.a) * (s - self.b) * (s - self.c)) ** 0.5
+
+
+s = Shape("GenericShape")
+try:
+    s.describe()
+except NotImplementedError as e:
+    print(f"Shape itself raises NotImplementedError when describe() is called.")
+
+print()
+
+shapes = [
+    Circle(5),
+    Rectangle(4, 6),
+    Triangle(3, 4, 5),
+]
+
+for shape in shapes:
+    shape.describe()
+
+    
